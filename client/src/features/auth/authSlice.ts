@@ -2,6 +2,10 @@ import { createSlice } from "@reduxjs/toolkit"
 import login from "./api/login"
 import register from "./api/register"
 import Credentials from "../../types/Credentials"
+import getLocalCredentials from "../../utils/localstorage/getLocalCredentials"
+import setLocalCredentials from "../../utils/localstorage/setLocalCredentials"
+
+const localCredentials = getLocalCredentials()
 
 interface AuthState {
     loading:boolean
@@ -13,8 +17,8 @@ interface AuthState {
 
 const initialState: AuthState = {
     loading:false,
-    loggedIn:false,
-    credentials:null,
+    loggedIn:localCredentials?true:false,
+    credentials:localCredentials,
     errorMessage:null,
     authIntention:"login"
 
@@ -40,7 +44,10 @@ const authSlice = createSlice({
                 state.errorMessage = data.errorMessage
                 return
             }
-            state.credentials = data.credentials
+            const credentials = data.credentials
+            setLocalCredentials({credentials})
+
+            state.credentials = credentials
             state.loggedIn = true
         })
         .addCase(login.rejected,(state:AuthState)=>{
@@ -59,7 +66,10 @@ const authSlice = createSlice({
                 return
             }
             state.loggedIn = true
-            state.credentials = data.credentials
+            const credentials = data.credentials
+            setLocalCredentials({credentials})
+            state.credentials = credentials
+
         })
         .addCase(register.rejected,(state:AuthState)=>{
             state.loading = false
