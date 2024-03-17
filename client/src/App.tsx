@@ -1,4 +1,3 @@
-
 import './App.css'
 import { useAppSelector } from './app/hooks'
 import Auth from './components/Auth'
