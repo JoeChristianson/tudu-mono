@@ -1,0 +1,8 @@
+@import "../../style/variables";
+@import "../../style/mixins";
+.div{
+    background:$checkbox-bg;
+    width: $checkbox-size;
+    height: $checkbox-size;
+    @include hover;
+}

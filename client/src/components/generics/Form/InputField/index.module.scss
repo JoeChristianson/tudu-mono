@@ -1,0 +1,15 @@
+.input-field{
+    display: flex;
+    flex-direction: column;
+    input,textarea,select{
+        width:300px;
+        margin-bottom: 22px;
+        margin-top: 5px;
+        font-size: 1.1rem;
+        padding:.5em;
+    }
+    textarea{
+        resize: unset;
+        height: 10em;
+    }
+}

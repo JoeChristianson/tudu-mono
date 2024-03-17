@@ -1,0 +1,13 @@
+@import "../../style/variables";
+
+.div{
+     width: 450px;
+    display: flex;
+    max-height:100vh ;
+    flex-direction: column;
+    background: $module-background;
+    padding:.5em;
+    gap:.5em;
+    border-radius: $task-cont-border-radius;
+    margin:1em;
+    }

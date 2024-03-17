@@ -1,0 +1,23 @@
+{
+    "name": "the_one",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm run dev\"",
+      "install": "cd server && npm i -f && cd ../client && npm i -f",
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "build": "cd client && npm run build",
+      "install-client": "cd client && npm install -f",
+      "heroku-postbuild": "npm run install-client && npm run build",
+      "server": "cd server/dist/src && node index.js",
+      "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
+      "start": "concurrently --kill-others-on-fail \"npm run server\""
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "concurrently": "^7.6.0"
+    }
+}
