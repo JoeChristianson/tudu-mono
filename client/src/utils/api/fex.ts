@@ -1,4 +1,5 @@
 import { DynamicObject } from "../../types/generic"
+import getAPIAuth from "./getAPIAuth"
 import getJWT from "./getJWT"
 import route from "./route"
 
@@ -21,13 +22,14 @@ export const fexPost = async (urlEnd:string,body:any)=>{
     try{
         const bearer = getJWT()
         const url = route(urlEnd)
+        const apiAuth = getAPIAuth()
         const resp = await fetch(url,{
             method:'POST',
             headers:{
                 'Content-Type':"application/json",
                 'Authorization':`Bearer ${bearer}`
             },
-            body:JSON.stringify(body)
+            body:JSON.stringify({...body,...apiAuth})
         })
 
         const data = await resp.json()
