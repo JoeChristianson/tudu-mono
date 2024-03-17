@@ -1,0 +1,14 @@
+@mixin hover{
+    opacity: .7;
+    cursor: pointer;
+    &:hover{
+        opacity: 1;
+    }
+}
+
+@mixin icon-button{
+    border: none;
+    background: none;
+    cursor: pointer;
+    @include hover;
+}

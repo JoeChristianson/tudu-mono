@@ -1,0 +1,7 @@
+@import "../../style/variables";
+
+.div{
+    padding: $checkbox-cont-padding;
+    background: $checkbox-cont-bg;
+    border-radius: $task-cont-border-radius 0 0 $task-cont-border-radius;
+}
