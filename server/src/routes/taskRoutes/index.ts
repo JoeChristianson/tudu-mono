@@ -69,15 +69,16 @@ taskRouter.put("/status",async (req,res)=>{
 
 taskRouter.post("/generate-subtasks",async (req,res)=>{
     try{
-        const {id} = req.body
+        const {id,userId,jwt} = req.body
         const task = await Task.findById(id)
+        await validateUser({userId,jwt})
         if(!task){
             throw new Error("No matching id")
         }
         const subtaskNames = await generateSubtasks({task})
         const subtasks = []
         for (let subtaskName of subtaskNames){
-             const subtask  = await createSubtask({parentId:id,name:subtaskName})
+             const subtask  = await createSubtask({parentId:id,name:subtaskName,userId})
             subtasks.push(subtask)
             }
         res.send({subtasks})
@@ -89,8 +90,9 @@ taskRouter.post("/generate-subtasks",async (req,res)=>{
 
 taskRouter.post("/subtask",async (req,res)=>{
     try{
-        const {name,parentTaskId} = req.body
-        const subtask = await Task.create({name})
+        const {name,parentTaskId,jwt,userId} = req.body
+        await validateUser({userId,jwt})
+        const subtask = await Task.create({name,user:userId})
         const task = await Task.findById(parentTaskId)
         if(!task){
             throw new Error("No task matching that id")
