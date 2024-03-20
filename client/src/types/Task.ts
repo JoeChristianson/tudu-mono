@@ -7,6 +7,7 @@ type Task = {
     resources:LinkType[]
     tips_and_tricks?:string[]
     subTasks?:Task[]
+    notes?:string
 }
 
 export default Task

@@ -27,13 +27,13 @@ const Login = ({}: Props) => {
         dispatch(setAuthIntention({authIntention:"register"}))
     }
 
-    return <Main>
+    return <main>
         <Form
     fields={fields}    
     handleSubmit={handleSubmit}
     ></Form>
     <Button onClick={handleRegisterButton}>Register</Button>
-    </Main>
+    </main>
 }
 
 export default Login
