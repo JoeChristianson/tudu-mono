@@ -20,6 +20,7 @@ export interface ITask extends Document {
     resources:{title:string,url:string}
     createdAt:Date
     completedOn:Date
+    notes?:string
   }
 
 const TaskSchema: Schema = new Schema({
@@ -53,6 +54,11 @@ const TaskSchema: Schema = new Schema({
     completedOn:{
       type:Date,
       required:false
+    },
+    notes:{
+      type:String,
+      required:false,
+      default:""
     }
 });
 

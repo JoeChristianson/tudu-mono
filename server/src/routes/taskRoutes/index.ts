@@ -44,7 +44,7 @@ taskRouter.post("/",async (req,res)=>{
 taskRouter.put("/status",async (req,res)=>{
     try{
 
-        console.log("changing status")
+            console.log("changing status")
         const {taskId,status} = req.body
         if(status!=="complete"&&status!=="incomplete"){
             throw new Error("Invalid Status")
@@ -58,6 +58,23 @@ taskRouter.put("/status",async (req,res)=>{
         if(status==="complete"){
             task.completedOn = new Date()
         }
+        await task.save()
+        res.send({success:true,task})
+    }catch(err:any){
+        console.log(err)
+        res.send({success:false,errorMessage:err.message})
+    }
+})
+
+taskRouter.put("/notes",async (req,res)=>{
+    try{
+        const {taskId,notes} = req.body
+        console.log({taskId,notes})
+                const task = await Task.findById(taskId)
+        if(!task){
+            throw new Error("No Task with that id")
+        }
+        task.notes = notes
         await task.save()
         res.send({success:true,task})
     }catch(err:any){
