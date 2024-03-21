@@ -8,6 +8,7 @@ type Task = {
     tips_and_tricks?:string[]
     subTasks?:Task[]
     notes?:string
+    priority?:number
 }
 
 export default Task

@@ -21,6 +21,7 @@ export interface ITask extends Document {
     createdAt:Date
     completedOn:Date
     notes?:string
+    priority?:number
   }
 
 const TaskSchema: Schema = new Schema({
@@ -59,6 +60,11 @@ const TaskSchema: Schema = new Schema({
       type:String,
       required:false,
       default:""
+    },
+    priority:{
+      type:Number,
+      required:false,
+      default:0
     }
 });
 
