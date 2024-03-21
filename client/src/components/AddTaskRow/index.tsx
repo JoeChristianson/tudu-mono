@@ -6,6 +6,7 @@ import addNewTaskAPI from "../../api/tasks"
 import createId from "../../utils/createId"
 import { useAppSelector } from "../../app/hooks"
 import { RootState } from "../../app/store"
+import { closeModal } from "../../features/modal/modalSlice"
 
 type Props = {
 }
@@ -24,7 +25,6 @@ const AddTaskRow = ({}: Props) => {
     
     const handleEnterKeyPress = async () => {
         const id = createId()
-        console.log({userId,jwt})
         if(!userId||!jwt){
             return
         }
@@ -33,7 +33,8 @@ const AddTaskRow = ({}: Props) => {
         const newId = res.id
         dispatch(setId({id,newId}))
         setText("")
-      };
+        dispatch(closeModal())
+    };
 
     const handleKeyPress = (event:KeyboardEvent<HTMLInputElement>)=>{
         const {key} = event
@@ -48,6 +49,7 @@ const AddTaskRow = ({}: Props) => {
     return <div className={styles.div}>
         <input onChange={handleChange} value={text}
         onKeyDown={handleKeyPress}
+        autoFocus
         ></input>
     </div>
 }
