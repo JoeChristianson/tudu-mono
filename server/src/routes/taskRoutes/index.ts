@@ -133,5 +133,16 @@ taskRouter.delete("/:id",async (req,res)=>{
     }
 })
 
+taskRouter.put("/priority/:id",async (req,res)=>{
+    try{
+        const taskId = req.params.id
+        const priority = req.body.priority
+        await Task.findByIdAndUpdate(taskId,{priority})
+        res.json({success:true})
+    }catch(err:any){
+        res.json({error:true,message:err.message})
+    }
+})
+
 
 export default taskRouter

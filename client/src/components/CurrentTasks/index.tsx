@@ -6,6 +6,7 @@ import ExistingTask from "../ExistingTask"
 import { useEffect } from "react"
 import fetchTasks from "../../features/tasks/api/fetchTasks"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import sortByPriority from "./helpers/sortByPriority"
 
 
 const CurrentTasks = () => {
@@ -25,8 +26,10 @@ const CurrentTasks = () => {
         return<div></div>
     }
 
+    const sortedTasks = sortByPriority({tasks})
+    console.log({sortedTasks})
     return <div className={styles.div}>
-        {tasks.map((task:Task,index:number)=>{
+        {sortedTasks.map((task:Task,index:number)=>{
             return<ExistingTask
             task={task}
             key={index}

@@ -7,19 +7,23 @@ import fetchTasks from './api/fetchTasks';
 import postCompleteTask from './api/postCompleteTask';
 import generateTips from './api/generateTips';
 import generateSubtasks from './api/generateSubtasks';
+import getHighestPriority from './helpers/getHighestPriority';
+import prioritizeTaskAPI from './api/prioritizeTaskAPI';
 
 interface TasksState {
   tasks:Task[]
   detailedTaskId:null|string
   loading:boolean
   error:null|string
+  highestPriority:number
 }
 
 const initialState: TasksState = {
   tasks:[],
   detailedTaskId:null,
   loading:true,
-  error:null
+  error:null,
+  highestPriority:0
 };
 
 const tasksSlice = createSlice({
@@ -37,6 +41,18 @@ const tasksSlice = createSlice({
       state.tasks = setTaskAsComplete({_id:id,tasks})
       postCompleteTask({taskId:id})
     },
+    prioritizeTask: (state,action:PayloadAction<string>)=>{
+      const taskId = action.payload
+      const priority = state.highestPriority+1
+      state.tasks = state.tasks.map((task)=>{
+        if(task._id===taskId){
+          return {...task,priority}
+        }
+        return {...task}
+      })
+      state.highestPriority = priority
+      prioritizeTaskAPI({taskId,priority})
+    },
     setDetailedTaskId: (state,action:PayloadAction<{id:string}>)=>{
       const {id} = action.payload
       state.detailedTaskId = id
@@ -53,11 +69,14 @@ const tasksSlice = createSlice({
     })
     .addCase(fetchTasks.fulfilled, (state:TasksState,action)=>{
       state.loading = false
-      state.tasks = action.payload
+      const tasks = action.payload
+      state.tasks = tasks
+      state.highestPriority = getHighestPriority({tasks})  
     })
     .addCase(fetchTasks.rejected, (state:TasksState,action)=>{
       state.loading = false
       state.error = action.error.message||"undefined error"
+      
     })
     .addCase(generateTips.pending,(state:TasksState,action)=>{
       state.loading = true
@@ -93,5 +112,5 @@ const tasksSlice = createSlice({
     })
 });
 
-export const {addTask,completeTask,setId,setDetailedTaskId } = tasksSlice.actions;
+export const {addTask,completeTask,setId,setDetailedTaskId,prioritizeTask } = tasksSlice.actions;
 export default tasksSlice.reducer;
