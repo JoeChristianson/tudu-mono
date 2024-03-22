@@ -2,6 +2,7 @@ import { useAppSelector } from "../../app/hooks"
 import getTask from "../../utils/getTask"
 import ModuleCont from "../ModuleCont"
 import Subtasks from "../Subtasks"
+import TaskCategoriesModule from "../modules/TaskCategoriesModules"
 import Resources from "./Resources"
 import TipsAndTricks from "./TipsAndTricks"
 import styles from "./index.module.scss"
@@ -27,13 +28,16 @@ const DetailsPane = ({}: Props) => {
     const {name,resources,tips_and_tricks} = task
 
 
-    return <ModuleCont>
+    return<div>
+        <TaskCategoriesModule></TaskCategoriesModule>
+     <ModuleCont>
 
             <h3 style={{textAlign:"center"}}>{name}</h3>
             <Subtasks task={task}></Subtasks>
             <TipsAndTricks tips={tips_and_tricks}></TipsAndTricks>
             <Resources resources={resources}></Resources>
     </ModuleCont>
+    </div>
 }
 
 export default DetailsPane  

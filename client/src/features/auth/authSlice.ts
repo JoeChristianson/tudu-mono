@@ -4,6 +4,7 @@ import register from "./api/register"
 import Credentials from "../../types/Credentials"
 import getLocalCredentials from "../../utils/localstorage/getLocalCredentials"
 import setLocalCredentials from "../../utils/localstorage/setLocalCredentials"
+import addCategoryForUser from "./api/addCategoryForUser"
 
 const localCredentials = getLocalCredentials()
 
@@ -30,6 +31,18 @@ const authSlice = createSlice({
     reducers:{
         setAuthIntention:(state,action)=>{
             state.authIntention = action.payload.authIntention
+        },
+        addCategory:(state,action)=>{
+            const category = action.payload
+            if(!state.credentials?.user.categories){
+                return
+            }
+            const categories = state.credentials.user.categories
+            state.credentials.user.categories = [...categories,action.payload]
+            const userId = state.credentials.user._id
+            const jwt = state.credentials.jwt
+            addCategoryForUser({userId,jwt,category})
+            setLocalCredentials({credentials:state.credentials})
         }
     },
     extraReducers: (builder)=>{
@@ -78,5 +91,5 @@ const authSlice = createSlice({
     }  
 })
 
-export const {setAuthIntention} = authSlice.actions
+export const {setAuthIntention,addCategory} = authSlice.actions
 export default authSlice.reducer

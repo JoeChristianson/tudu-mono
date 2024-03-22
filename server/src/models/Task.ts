@@ -22,6 +22,7 @@ export interface ITask extends Document {
     completedOn:Date
     notes?:string
     priority?:number
+    categories?:string[]
   }
 
 const TaskSchema: Schema = new Schema({
@@ -65,7 +66,10 @@ const TaskSchema: Schema = new Schema({
       type:Number,
       required:false,
       default:0
-    }
+    },
+    categories:[{
+      type:String
+    }]
 });
 
 const Task = mongoose.model<ITask>('Task', TaskSchema);
