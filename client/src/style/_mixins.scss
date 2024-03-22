@@ -12,3 +12,8 @@
     cursor: pointer;
     @include hover;
 }
+
+@mixin selected-btn{
+    background:black;
+    color:white;
+}

@@ -9,6 +9,7 @@ import generateTips from './api/generateTips';
 import generateSubtasks from './api/generateSubtasks';
 import getHighestPriority from './helpers/getHighestPriority';
 import prioritizeTaskAPI from './api/prioritizeTaskAPI';
+import toggleCategoryAPI from './api/toggleCategoryAPI';
 
 interface TasksState {
   tasks:Task[]
@@ -30,6 +31,10 @@ const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
+    addFullTask:(state,action)=>{
+      const task = action.payload
+      state.tasks = [...state.tasks,task]
+    },
     addTask: (state, action:PayloadAction<{name:string,id:string}>)=>{
         const {id,name} = action.payload
         const newTask = createNewTask({name,_id:id})
@@ -61,7 +66,26 @@ const tasksSlice = createSlice({
       const {tasks} = state
       const {id,newId} = action.payload
       state.tasks = setNewId({id,tasks,newId})
+    },
+    toggleCategory:(state,action)=>{
+      const {taskId,category,selected} = action.payload
+      const tasks = [...state.tasks].map((task)=>{
+        if(task._id!==taskId){
+          return task
+        }
+        let categories = task.categories
+        if(selected){
+          categories = categories?.filter(c=>c!==category)
+        }
+        else{
+          categories?.push(category)
+        }
+        return {...task,categories}
+      })
+      state.tasks = tasks
+      toggleCategoryAPI({taskId,category})
     }
+    
   },
   extraReducers: (builder)=>
     builder.addCase(fetchTasks.pending,(state:TasksState)=>{
@@ -112,5 +136,5 @@ const tasksSlice = createSlice({
     })
 });
 
-export const {addTask,completeTask,setId,setDetailedTaskId,prioritizeTask } = tasksSlice.actions;
+export const {addFullTask,addTask,completeTask,setId,setDetailedTaskId,prioritizeTask,toggleCategory } = tasksSlice.actions;
 export default tasksSlice.reducer;

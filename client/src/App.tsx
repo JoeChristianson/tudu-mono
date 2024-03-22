@@ -6,10 +6,12 @@ import Main from './components/Main'
 import ModalResolver from './components/ModalResolver'
 import NotesModule from './components/NotesModule'
 import TasksList from './components/TasksList'
+import TopBar from './components/TopBar'
 
 function App() {
 
   const loggedIn = useAppSelector((state)=>state.auth.loggedIn)
+  const taskId = useAppSelector(s=>s.tasks.detailedTaskId)
 
   if(!loggedIn){
     return<Auth></Auth>
@@ -18,9 +20,10 @@ function App() {
   return (
 <>
 <ModalResolver></ModalResolver>
+<TopBar></TopBar>
 <Main>
       <TasksList></TasksList>
-      <DetailsPane></DetailsPane>
+      <DetailsPane  key={taskId}></DetailsPane>
       <NotesModule></NotesModule>
     </Main>
 </>

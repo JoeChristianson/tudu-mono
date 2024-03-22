@@ -7,7 +7,6 @@ import { UserModel } from "../../models/User"
 
 const taskRouter = express.Router()
 
-
 taskRouter.get("/:userId",async(req,res)=>{
     try{
         const userId = req.params.userId
@@ -40,6 +39,26 @@ taskRouter.post("/",async (req,res)=>{
         res.json({success:false,errorMessage:err.message})
     }
 })
+
+taskRouter.post("/add",async (req,res)=>{
+    try{
+    
+        const {task,jwt,userId} = req.body
+        await validateUser({userId,jwt})
+        const user = await UserModel.findById(userId)
+        if(!user){
+            throw new Error("Wrong Email")
+        }
+        const createdAt = new Date()
+        const taskDoc = await Task.create({...task,createdAt,user:userId,isRoot:true})
+        console.log({task:taskDoc})
+        res.send({task:taskDoc,success:true})
+    }catch(err:any){
+        console.log(err.message)
+        res.json({success:false,errorMessage:err.message})
+    }
+})
+
 
 taskRouter.put("/status",async (req,res)=>{
     try{
@@ -144,5 +163,33 @@ taskRouter.put("/priority/:id",async (req,res)=>{
     }
 })
 
+taskRouter.post("/category",async (req,res)=>{
+    try{
+        const {taskId,category,userId} = req.body
+        const user = await UserModel.findById(userId)
+        if(!user){
+            throw new Error("No user with that id.")
+        }
+        const categories = user.categories
+        if(!categories.includes(category)){
+            user.categories = [...user.categories,category]
+            await user.save()
+        }
+        console.log({user})
+        const task = await Task.findById(taskId)
+        if(!task){
+            throw new Error("No task with that id.")
+
+        }
+        const taskCategories = task.categories||[]
+        if(!taskCategories.includes(category)){
+            task.categories = [...taskCategories,category]
+            await task.save()
+        }
+        res.json({success:true})
+    }catch(err:any){
+        res.json({error:true,message:err.message})
+    }
+})
 
 export default taskRouter

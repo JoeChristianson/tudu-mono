@@ -9,4 +9,6 @@
     padding:.5em;
     gap:.5em;
     border-radius: $task-cont-border-radius;
-    }
+    max-height: 90vh;
+    overflow: scroll;
+}
