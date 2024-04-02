@@ -2,6 +2,8 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks"
 import { RootState } from "../../../../app/store"
 import { editIntendedTask } from "../../../../features/taskadd/taskaddSlice"
 import Button from "../../../Button"
+import ButtonsContainer from "../../../containers/ButtonsContainer"
+import Grid from "../../../containers/Grid"
 import AddCategory from "./AddCategory"
 import styles from "./index.module.scss"
 
@@ -27,8 +29,17 @@ const ManageCategories = ({}: Props) => {
         dispatch(editIntendedTask({categories:Array.from(newCategories)}))
     }
 
-    return <div className={styles.div}>
-        {(categories||[]).map((category,index)=>{
+    const sortedCategories = ([...categories]||[]).sort((a,b)=>{
+        if(a>b){
+            return 1
+        }
+        return -1
+    })
+
+    return <Grid>
+        <ButtonsContainer>
+
+        {sortedCategories.map((category,index)=>{
             
             const isSelected = (selectedCategories||[]).includes(category)
             return <div  key={index}>
@@ -37,7 +48,8 @@ const ManageCategories = ({}: Props) => {
         
         )}
 <AddCategory></AddCategory>
-    </div>
+        </ButtonsContainer>
+    </Grid>
 }
 
 export default ManageCategories

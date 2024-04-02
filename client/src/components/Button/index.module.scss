@@ -6,6 +6,12 @@
     background:rgb(221, 221, 221);
     color:black;
     border-radius: 30px;
+    opacity: .6;
+    cursor: pointer;
+    &:hover{
+        opacity: 1;
+
+    }
     &.selected{
         @include selected-btn;
     }

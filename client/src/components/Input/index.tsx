@@ -1,11 +1,13 @@
 import styles from "./index.module.scss"
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-    // Additional props specific to your input component can be defined here
-  }
+  autoFocus?:boolean
+}
 
 const Input = (props:InputProps) => {
-    return<input className={styles.input} {...props}></input>
+    const {autoFocus} = props  
+  
+  return<input autoFocus={autoFocus} className={styles.input} {...props}></input>
 }
 
 export default Input   

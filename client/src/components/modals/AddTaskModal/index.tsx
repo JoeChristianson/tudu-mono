@@ -4,9 +4,8 @@ import { closeModal } from "../../../features/modal/modalSlice"
 import { resetIntendedTask } from "../../../features/taskadd/taskaddSlice"
 import addTaskAPI from "../../../features/tasks/api/addTaskAPI"
 import { addFullTask } from "../../../features/tasks/tasksSlice"
-import AddTaskRow from "../../AddTaskRow"
 import Button from "../../Button"
-import Input from "../../Input"
+import Grid from "../../containers/Grid"
 import ManageCategories from "./ManageCategories"
 import TaskName from "./TaskName"
 import styles from "./index.module.scss"
@@ -42,10 +41,12 @@ const AddTaskModal = ({}: Props) => {
 
     
     return <div className={styles.div}>
-        <TaskName></TaskName>
-        <ManageCategories></ManageCategories>
-        <Button onClick={handleSubmit}>Submit</Button>
-    </div>
+        <Grid gap="2em">
+                <TaskName></TaskName>
+                <ManageCategories></ManageCategories>
+                <Button onClick={handleSubmit}>Submit</Button>
+            </Grid>
+            </div>
 }
 
 export default AddTaskModal

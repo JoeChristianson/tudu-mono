@@ -1,8 +1,5 @@
-.selected{
-    background:green;
-}
-
 .div{
     display: grid;
     gap:.5em;
+    justify-items: start;
 }

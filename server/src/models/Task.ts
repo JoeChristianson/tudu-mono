@@ -23,6 +23,12 @@ export interface ITask extends Document {
     notes?:string
     priority?:number
     categories?:string[]
+    requiredItems?:string[]
+    estimatedCompletionTime?:number
+    difficulty?:number
+    pointValue?:number
+    urgency?:number
+    textAssets?:string[]
   }
 
 const TaskSchema: Schema = new Schema({
@@ -69,6 +75,42 @@ const TaskSchema: Schema = new Schema({
     },
     categories:[{
       type:String
+    }],
+    alternativeSolutions:[{
+      type:Schema.Types.ObjectId, ref:"Task",
+      required:false
+    }],
+    advantages:{
+      type:String,
+      required:false
+    },
+    disadvantages:{
+      type:String,
+      required:false
+    },
+    requiredItems:[{
+      type:String,
+      required:false
+    }],
+    estimatedCompletionTime:{
+      type:String,
+      required:false
+    },
+    difficulty:{
+      type:Number,
+      required:false
+    },
+    pointValue:{
+      type:Number,
+      required:false
+    },
+    urgency:{
+      type:Number,
+      required:false
+    },
+    textAssets:[{
+      type:String,
+      required:false
     }]
 });
 

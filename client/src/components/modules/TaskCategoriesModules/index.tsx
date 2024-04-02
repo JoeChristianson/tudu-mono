@@ -3,6 +3,8 @@ import { toggleCategory } from "../../../features/tasks/tasksSlice"
 import getTask from "../../../utils/getTask"
 import Button from "../../Button"
 import ModuleCont from "../../ModuleCont"
+import ButtonsContainer from "../../containers/ButtonsContainer"
+import Grid from "../../containers/Grid"
 import AddCategory from "../../modals/AddTaskModal/ManageCategories/AddCategory"
 import styles from "./index.module.scss"
 
@@ -19,7 +21,6 @@ const TaskCategoriesModule = ({}: Props) => {
     }
 
     const task = getTask({tasks,detailedTaskId})
-    console.log({task})
     const taskCategories = task?.categories
     
     interface Args {
@@ -32,14 +33,13 @@ const TaskCategoriesModule = ({}: Props) => {
     }
 
     return<ModuleCont key={detailedTaskId}>
-        <div className={styles.cont}>
-
+        <ButtonsContainer>
         {allCategories?.map((category,index)=>{
             const selected = taskCategories?.includes(category)
             return<Button onClick={()=>handleClick({category,selected:selected||false})} selected={selected} key={index}>{category}</Button>
         })}
         <AddCategory></AddCategory>
-        </div>
+        </ButtonsContainer>
     </ModuleCont>
 }
 
