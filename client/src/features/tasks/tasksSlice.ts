@@ -46,6 +46,12 @@ const tasksSlice = createSlice({
       state.tasks = setTaskAsComplete({_id:id,tasks})
       postCompleteTask({taskId:id})
     },
+    deleteTask: (state,action)=>{
+      const taskId = action.payload
+      const tasks = [...state.tasks].filter(t=>t._id!==taskId)
+      state.tasks = tasks
+      
+    },
     prioritizeTask: (state,action:PayloadAction<string>)=>{
       const taskId = action.payload
       const priority = state.highestPriority+1
@@ -136,5 +142,5 @@ const tasksSlice = createSlice({
     })
 });
 
-export const {addFullTask,addTask,completeTask,setId,setDetailedTaskId,prioritizeTask,toggleCategory } = tasksSlice.actions;
+export const {addFullTask,addTask,completeTask,deleteTask,setId,setDetailedTaskId,prioritizeTask,toggleCategory } = tasksSlice.actions;
 export default tasksSlice.reducer;

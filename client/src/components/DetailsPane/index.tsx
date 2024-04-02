@@ -27,7 +27,6 @@ const DetailsPane = ({}: Props) => {
 
     const {name,resources,tips_and_tricks} = task
 
-
     return<div>
         <TaskCategoriesModule></TaskCategoriesModule>
      <ModuleCont>
@@ -35,7 +34,7 @@ const DetailsPane = ({}: Props) => {
             <h3 style={{textAlign:"center"}}>{name}</h3>
             <Subtasks task={task}></Subtasks>
             <TipsAndTricks tips={tips_and_tricks}></TipsAndTricks>
-            <Resources resources={resources}></Resources>
+            <Resources resources={resources||""}></Resources>
     </ModuleCont>
     </div>
 }

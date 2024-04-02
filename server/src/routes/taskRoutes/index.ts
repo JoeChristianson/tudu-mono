@@ -4,18 +4,20 @@ import generateSubtasks from "../../util/subtaskGeneration/generateSubtasks"
 import createSubtask from "./createSubtask"
 import validateUser from "../../util/auth/validateUser"
 import { UserModel } from "../../models/User"
+import queryOpenAi from "../../util/queryOpenAi"
+import createPopulateQuery from "../../util/queries/populateQuery"
 
 const taskRouter = express.Router()
 
 taskRouter.get("/:userId",async(req,res)=>{
     try{
         const userId = req.params.userId
-        console.log({userId})
         const tasks = await Task.find({isRoot:true,status:"incomplete",user:userId}).populate({
             path:"subTasks",populate:"subTasks"
         })
-        console.log({userId,tasks})
-        res.send({tasks})
+        // const tasks = await Task.find({isRoot:true,status:"incomplete",user:userId})
+
+        res.status(200).json({tasks})
     }catch(err){
         console.log({err})
         res.send("")
@@ -59,6 +61,36 @@ taskRouter.post("/add",async (req,res)=>{
     }
 })
 
+taskRouter.put("/populate",async (req,res)=>{
+    try{
+        const {taskId,additionalNotes,userId} = req.body
+        const task = await Task.findById(taskId)
+        if(!task){
+            throw new Error("No task with that id")
+        }
+        const query = createPopulateQuery({task,additionalNotes})
+        const responseContent = await queryOpenAi({query})
+        const {
+            subtasks,tips,requiredToolsAndMaterials,estimatedCompletionTime,difficulty, pointValue,urgency,textAssets
+        } = responseContent
+        task.subTasks = [] as any
+        for (let subtaskName of subtasks){
+            const subtask  = await createSubtask({parentId:taskId,name:subtaskName,userId})
+           task.subTasks.push(subtask)
+           }
+           task.tips_and_tricks = tips
+           task.requiredItems = requiredToolsAndMaterials
+           task.estimatedCompletionTime = estimatedCompletionTime
+           task.difficulty = difficulty
+           task.pointValue = pointValue
+           task.urgency = urgency
+           task.textAssets = textAssets
+           task.save()
+           res.status(200).json({success:true,task})
+    }catch(err:any){
+        res.status(500).json({success:false,errorMessage:err.message})
+    }
+})
 
 taskRouter.put("/status",async (req,res)=>{
     try{
@@ -145,6 +177,8 @@ taskRouter.post("/subtask",async (req,res)=>{
 taskRouter.delete("/:id",async (req,res)=>{
     try{
         const taskId = req.params.id
+        const {userId,jwt} = req.body
+        validateUser({userId,jwt})
         await Task.findByIdAndDelete(taskId)
         res.json({success:true})
     }catch(err:any){

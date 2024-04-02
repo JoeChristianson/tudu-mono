@@ -22,7 +22,7 @@ const AddCategory = ({}: Props) => {
     }
 
     if(!isOpen){
-        return<Button onClick={handleOpen}>Add Category</Button>
+        return<Button className={styles.button} onClick={handleOpen}>+</Button>
     }
 
     const handleEnter = (e:any)=>{
@@ -36,13 +36,11 @@ const AddCategory = ({}: Props) => {
     }
 
     return <div className={styles.div}>
-        <LabelAndInput>
-        <Label>Press Enter to Add Category</Label>
         <Input
-        onChange={(e)=>setCategory(e.target.value)}
+    placeholder="Category Name"
+onChange={(e)=>setCategory(e.target.value)}
         value={category}
         onKeyDown={handleEnter}></Input>
-    </LabelAndInput>
         </div>
 }
 

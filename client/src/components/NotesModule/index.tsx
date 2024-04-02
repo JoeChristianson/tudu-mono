@@ -1,3 +1,4 @@
+import styles from "./index.module.scss";
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import editNotes from "../../features/tasks/api/editNotes"
 import getTask from "../../utils/getTask"
@@ -26,11 +27,14 @@ const NotesModule = () => {
     }
 
 return <ModuleCont>
+        <div className={styles['text-cont']}>
+
             <DebouncedTextArea
             key={detailedTaskId}
             value={notes}
             handleChange={handleChange}
             ></DebouncedTextArea>
+            </div>
     </ModuleCont>
 }
 

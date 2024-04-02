@@ -22,9 +22,7 @@ const TaskName = ({}: Props) => {
 
     return <div className={styles.div}>
         <LabelAndInput>
-
-        <Label>Task Name</Label>
-        <Input onChange={(e)=>dispatch(editIntendedTask({name:e.target.value}))} value={name}></Input>
+        <Input autoFocus={true} placeholder="Task Name" onChange={(e)=>dispatch(editIntendedTask({name:e.target.value}))} value={name}></Input>
         </LabelAndInput>
     </div>
 }
