@@ -4,9 +4,11 @@ import { closeModal } from "../../../features/modal/modalSlice"
 import { resetIntendedTask } from "../../../features/taskadd/taskaddSlice"
 import addTaskAPI from "../../../features/tasks/api/addTaskAPI"
 import { addFullTask } from "../../../features/tasks/tasksSlice"
+import useHotKey from "../../../hooks/useHotKey"
 import Button from "../../Button"
 import Grid from "../../containers/Grid"
 import ManageCategories from "./ManageCategories"
+import Prioritize from "./Prioritize"
 import TaskName from "./TaskName"
 import styles from "./index.module.scss"
 
@@ -15,6 +17,7 @@ type Props = {
 }
 
 const AddTaskModal = ({}: Props) => {
+    const handleHotKey = useHotKey()
     const dispatch = useAppDispatch()
     const intendedTask = useAppSelector((state:RootState)=>{
         return state.taskAdd.intendedTask
@@ -27,7 +30,6 @@ const AddTaskModal = ({}: Props) => {
 
     
     const handleSubmit = async ()=>{
-        console.log({userId,jwt,intendedTask})       
         if(!userId||!jwt){
             return
         } 
@@ -40,8 +42,9 @@ const AddTaskModal = ({}: Props) => {
     }
 
     
-    return <div className={styles.div}>
+    return <div onKeyDown={handleHotKey} className={styles.div}>
         <Grid gap="2em">
+                <Prioritize></Prioritize>
                 <TaskName></TaskName>
                 <ManageCategories></ManageCategories>
                 <Button onClick={handleSubmit}>Submit</Button>

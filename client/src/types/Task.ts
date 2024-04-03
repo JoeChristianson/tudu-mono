@@ -20,8 +20,8 @@ export type IntendedTask = {
     tips_and_tricks?:string[]
     subTasks?:Task[]
     notes?:string
-    priority?:number
     categories?:string[]
+    priority:number
 }
     
     
