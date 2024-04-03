@@ -16,7 +16,7 @@ const initialState:TaskAddState = {
         subTasks:[],
         notes:"",
         priority:0,
-        categories:[]
+        categories:[],
     }
 }
 
@@ -32,9 +32,18 @@ const taskAddSlice = createSlice({
         },
         resetIntendedTask:(state)=>{
             state.intendedTask = initialState.intendedTask
+        },
+        togglePrioritize:(state,action)=>{
+            const topPriority = action.payload.topPriority
+            const currentPriority = state.intendedTask.priority
+            if(currentPriority){
+                state.intendedTask.priority = 0
+                return
+            }
+            state.intendedTask.priority = topPriority+1
         }
     }
 })
 
-export const {editIntendedTask,resetIntendedTask} = taskAddSlice.actions
+export const {editIntendedTask,resetIntendedTask,togglePrioritize} = taskAddSlice.actions
 export default taskAddSlice.reducer

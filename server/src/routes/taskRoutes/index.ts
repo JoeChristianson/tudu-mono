@@ -52,6 +52,8 @@ taskRouter.post("/add",async (req,res)=>{
             throw new Error("Wrong Email")
         }
         const createdAt = new Date()
+        const prioritized = task.prioritized
+        console.log({prioritized})
         const taskDoc = await Task.create({...task,createdAt,user:userId,isRoot:true})
         console.log({task:taskDoc})
         res.send({task:taskDoc,success:true})
