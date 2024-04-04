@@ -26,8 +26,6 @@ const taskAddSlice = createSlice({
     reducers:{
         editIntendedTask:(state,action)=>{
             const changeObject = action.payload
-            console.log({changeObject})
-            console.log({action})
             state.intendedTask = {...state.intendedTask,...action.payload}
         },
         resetIntendedTask:(state)=>{

@@ -7,7 +7,6 @@ interface Args {
 }
 
 const setNewId = ({id,tasks,newId}:Args)=>{
-    console.log({id,newId,tasks})
     tasks = [...tasks]
     for (let task of tasks){
         if (task._id===id){

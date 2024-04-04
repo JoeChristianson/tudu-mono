@@ -8,7 +8,6 @@ type Args = {
 const validateUser = ({userId,jwt}: Args) => {
     
     const decodedJWT:any = decodeJWT({token:jwt})
-    console.log({decodedJWT})
     const tokenuserId = decodedJWT?.userId 
     
     if(!tokenuserId){

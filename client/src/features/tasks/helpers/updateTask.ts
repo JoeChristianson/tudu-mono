@@ -13,10 +13,8 @@ const updateTask = ({id,tasks,payload}:Args)=>{
     for (let task of newTasks){
         if (task._id===id){
             task = {...task,...payload}
-            console.log("match",{task})
         }
     }
-    console.log("in it",newTasks)
     return newTasks
 }
 

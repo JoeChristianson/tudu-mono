@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import { IIterative } from './Iterative';
 
 export interface IUser extends Document {
   _id:string
@@ -6,6 +7,7 @@ export interface IUser extends Document {
     password:string
     email:string
     categories:string[]
+    iteratives?:IIterative[]
   }
 
 
@@ -15,6 +17,11 @@ export const UserSchema = new Schema({
   name:{type:String},
   categories:[{
     type:String
+  }],
+  iteratives:[{
+    type:Schema.ObjectId,
+    ref:"Iterative",
+    required:false
   }]
 });
 

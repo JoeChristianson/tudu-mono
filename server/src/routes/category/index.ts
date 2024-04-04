@@ -10,7 +10,6 @@ const categoryRouter = express.Router()
 categoryRouter.post("/",async (req,res)=>{
     try{
         const {userId,jwt,category} = req.body
-        console.log({userId,jwt,category})
         await validateUser({userId,jwt})
         const user = await UserModel.findById(userId)
         if(!user){
@@ -21,10 +20,8 @@ categoryRouter.post("/",async (req,res)=>{
         }
         user?.categories.push(category)
         await user?.save()
-        console.log({user})
         res.status(200).json({success:true})
     }catch(err:any){
-        console.log(err.message)
         res.status(400).json({success:false,errorMessage:err.message})
     }
 })
@@ -32,7 +29,6 @@ categoryRouter.post("/",async (req,res)=>{
 categoryRouter.put("/task",async (req,res)=>{
     try{
         const {taskId,category} = req.body
-        console.log("putting",{taskId,category})
         const task = await Task.findById(taskId)
         if(!task){
             throw new Error("No task with that id")

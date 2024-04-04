@@ -30,7 +30,6 @@ const generateSubtasks = async ({task}:{task:ITask})=>{
     throw new Error("failed")
   }
   const responseContent = JSON.parse(content)
-  console.log({responseContent})
   const subtasks = responseContent.subtasks
   return subtasks
 }

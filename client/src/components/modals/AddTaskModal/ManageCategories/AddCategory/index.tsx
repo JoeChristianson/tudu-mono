@@ -17,7 +17,6 @@ const AddCategory = ({}: Props) => {
     const [category,setCategory] = useState("")
     const dispatch = useAppDispatch()
     const handleOpen = ()=>{
-        console.log("opening")
         setIsOpen(true)
     }
 

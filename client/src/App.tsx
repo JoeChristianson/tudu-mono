@@ -7,6 +7,8 @@ import ModalResolver from './components/ModalResolver'
 import NotesModule from './components/NotesModule'
 import TasksList from './components/TasksList'
 import TopBar from './components/TopBar'
+import HotKeyDebugger from './components/development/HotKeyDebugger'
+import IterativesModule from './components/modules/IterativesModule'
 
 function App() {
 
@@ -22,9 +24,11 @@ function App() {
 <ModalResolver></ModalResolver>
 <TopBar></TopBar>
 <Main>
+      <IterativesModule></IterativesModule>
       <TasksList></TasksList>
       <DetailsPane  key={taskId}></DetailsPane>
       <NotesModule></NotesModule>
+    <HotKeyDebugger></HotKeyDebugger>
     </Main>
 </>
     )
