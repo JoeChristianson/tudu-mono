@@ -21,7 +21,6 @@ const ManageCategories = ({}: Props) => {
     const handleClick = (category:string)=>{
         const newCategories = new Set(selectedCategories)
         if(newCategories.has(category)){
-            console.log("deleting")
             newCategories.delete(category)
         }else{
             newCategories.add(category)

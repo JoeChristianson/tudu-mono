@@ -6,7 +6,6 @@ interface Args {
 }
 
 const filterByCategories = ({categories,tasks}:Args)=>{
-    console.log({categories})
     if(categories.length===0){
         return tasks
     }

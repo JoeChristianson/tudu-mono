@@ -27,7 +27,6 @@ const provideResources = async ({task}:Args)=>{
       }
       const responseContent = JSON.parse(content)
       const resources = responseContent.resources
-      console.log({resources})
       return resources
 }
 

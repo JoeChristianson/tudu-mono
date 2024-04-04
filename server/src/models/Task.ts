@@ -29,6 +29,7 @@ export interface ITask extends Document {
     pointValue?:number
     urgency?:number
     textAssets?:string[]
+
   }
 
 const TaskSchema: Schema = new Schema({

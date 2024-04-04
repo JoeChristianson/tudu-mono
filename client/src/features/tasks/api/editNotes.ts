@@ -7,7 +7,6 @@ interface Args {
 }
 
 const editNotes = createAsyncThunk("tasks/editNotes",async ({taskId,notes}:Args)=>{
-    console.log("editing")
     const data = await fexPut("/tasks/notes",{taskId,notes})
     return {...data,taskId}
 })

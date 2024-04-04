@@ -35,7 +35,6 @@ taskRouter.post("/",async (req,res)=>{
         }
         const createdAt = new Date()
         const task = await Task.create({name,isRoot:true,status:"incomplete",createdAt,user:userId})
-        console.log({task})
         res.send({id:task._id})
     }catch(err:any){
         res.json({success:false,errorMessage:err.message})
@@ -53,12 +52,9 @@ taskRouter.post("/add",async (req,res)=>{
         }
         const createdAt = new Date()
         const prioritized = task.prioritized
-        console.log({prioritized})
         const taskDoc = await Task.create({...task,createdAt,user:userId,isRoot:true})
-        console.log({task:taskDoc})
         res.send({task:taskDoc,success:true})
     }catch(err:any){
-        console.log(err.message)
         res.json({success:false,errorMessage:err.message})
     }
 })
@@ -97,12 +93,10 @@ taskRouter.put("/populate",async (req,res)=>{
 taskRouter.put("/status",async (req,res)=>{
     try{
 
-            console.log("changing status")
         const {taskId,status} = req.body
         if(status!=="complete"&&status!=="incomplete"){
             throw new Error("Invalid Status")
         }
-        // const task = await Task.findByIdAndUpdate(taskId,{status},{new:true})
         const task = await Task.findById(taskId)
         if(!task){
             throw new Error("No Task with that id")
@@ -114,7 +108,6 @@ taskRouter.put("/status",async (req,res)=>{
         await task.save()
         res.send({success:true,task})
     }catch(err:any){
-        console.log(err)
         res.send({success:false,errorMessage:err.message})
     }
 })
@@ -122,7 +115,6 @@ taskRouter.put("/status",async (req,res)=>{
 taskRouter.put("/notes",async (req,res)=>{
     try{
         const {taskId,notes} = req.body
-        console.log({taskId,notes})
                 const task = await Task.findById(taskId)
         if(!task){
             throw new Error("No Task with that id")
@@ -131,7 +123,6 @@ taskRouter.put("/notes",async (req,res)=>{
         await task.save()
         res.send({success:true,task})
     }catch(err:any){
-        console.log(err)
         res.send({success:false,errorMessage:err.message})
     }
 })
@@ -153,7 +144,6 @@ taskRouter.post("/generate-subtasks",async (req,res)=>{
             }
         res.send({subtasks})
     }catch(err){
-        console.log(err)
         res.send("")
     }
 })
@@ -171,7 +161,6 @@ taskRouter.post("/subtask",async (req,res)=>{
         await task.save()
         res.send({id:subtask._id})
     }catch(err){
-        console.log(err)
         res.send("")
     }
 })
@@ -211,7 +200,6 @@ taskRouter.post("/category",async (req,res)=>{
             user.categories = [...user.categories,category]
             await user.save()
         }
-        console.log({user})
         const task = await Task.findById(taskId)
         if(!task){
             throw new Error("No task with that id.")

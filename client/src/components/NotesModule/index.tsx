@@ -22,7 +22,6 @@ const NotesModule = () => {
     const notes = task.notes
 
     const handleChange = (text:string)=>{
-        console.log("changin")
         dispatch(editNotes({taskId:detailedTaskId,notes:text}))        
     }
 

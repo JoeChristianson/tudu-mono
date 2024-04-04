@@ -112,7 +112,6 @@ const tasksSlice = createSlice({
       state.loading = true
     })
     .addCase(generateTips.fulfilled,(state:TasksState,action)=>{
-      console.log({payload:action.payload})
       const {taskId,resources,tips_and_tricks} = action.payload
       state.tasks = state.tasks.map((task)=>{
         const isMatch = task._id===taskId
@@ -129,7 +128,6 @@ const tasksSlice = createSlice({
     })
     .addCase(generateSubtasks.fulfilled,(state:TasksState,action:any)=>{
       const {subTasks,taskId} = action.payload
-      console.log("in case",{subTasks,taskId})
       state.tasks = state.tasks.map((task)=>{
         const isMatch = task._id===taskId
         if(!isMatch){
@@ -138,7 +136,6 @@ const tasksSlice = createSlice({
         task.subTasks = subTasks
         return task
       })
-      console.log(state.tasks)
     })
 });
 

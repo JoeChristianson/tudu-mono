@@ -3,6 +3,7 @@ import styles from "./index.module.scss"
 import { useAppDispatch } from "../../app/hooks"
 import { closeModal, openModal } from "../../features/modal/modalSlice"
 import AddTaskModal from "../modals/AddTaskModal"
+import AddIterativeModal from "../modals/AddIterativeModal"
 
 type Props = {
     children:ReactNode
@@ -17,13 +18,16 @@ const Main = ({children}: Props) => {
             const key = event.key
             if(key==="Escape"){
                 dispatch(closeModal())
-            }
+            }2
             if(!event.ctrlKey){
                 return
             }
+            event.preventDefault(); // Prevent the default action
             if (key === 'a') {
-                event.preventDefault(); // Prevent the default action
                 dispatch(openModal(<AddTaskModal></AddTaskModal>))
+            }
+            if(key==="d"){
+                dispatch(openModal(<AddIterativeModal></AddIterativeModal>))
             }
         };
 
